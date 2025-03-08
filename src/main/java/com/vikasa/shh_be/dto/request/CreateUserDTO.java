@@ -8,14 +8,8 @@ import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
-@Getter
 @AllArgsConstructor
 @ToString
-public class CreateUserDTO {
-    private String sex;
-    private byte age;
-    private String name;
-    private String secret;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+public class CreateUserDTO extends UserDTO {
+
 }
