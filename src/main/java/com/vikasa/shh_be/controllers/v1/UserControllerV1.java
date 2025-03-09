@@ -35,5 +35,4 @@ public class UserControllerV1 {
     void updateUser(@PathVariable("userId") String userId, @RequestBody UpdateUserDTO user) {
         userService.updateUser(userId, user);
     }
-
 }
