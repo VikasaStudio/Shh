@@ -6,6 +6,7 @@ import com.vikasa.shh_be.dto.request.UpdateUserDTO;
 import com.vikasa.shh_be.dto.response.UserDAO;
 import com.vikasa.shh_be.exceptions.ErrorDetails;
 import com.vikasa.shh_be.service.v1.UserServiceV1;
+import jakarta.validation.Valid;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class UserControllerV1 {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    UserDAO createUser(@RequestBody CreateUserDTO user) {
+    UserDAO createUser(@Valid @RequestBody CreateUserDTO user) {
         System.out.printf("Received create request for %s", user.getSecret());
         return userService.addUser(user);
     }
