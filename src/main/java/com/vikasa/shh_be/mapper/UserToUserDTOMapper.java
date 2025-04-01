@@ -1,9 +1,15 @@
 package com.vikasa.shh_be.mapper;
 
 import com.vikasa.shh_be.dto.response.UserDAO;
+import com.vikasa.shh_be.exceptions.ErrorDetails;
 import com.vikasa.shh_be.model.User;
+import jakarta.annotation.Nullable;
+import lombok.SneakyThrows;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
