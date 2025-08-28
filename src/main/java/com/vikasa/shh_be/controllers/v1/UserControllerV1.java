@@ -4,8 +4,14 @@ import com.vikasa.shh_be.dto.request.CreateUserDTO;
 import com.vikasa.shh_be.dto.request.DeleteUserRequestBody;
 import com.vikasa.shh_be.dto.request.UpdateUserDTO;
 import com.vikasa.shh_be.dto.response.UserDAO;
+import com.vikasa.shh_be.exceptions.ErrorDetails;
 import com.vikasa.shh_be.service.v1.UserServiceV1;
+import jakarta.validation.Valid;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
@@ -16,13 +22,18 @@ public class UserControllerV1 {
     UserServiceV1 userService;
 
     @PostMapping()
-    UserDAO createUser(@RequestBody CreateUserDTO user) {
+    @ResponseStatus(HttpStatus.CREATED)
+    UserDAO createUser(@Valid @RequestBody CreateUserDTO user) {
         System.out.printf("Received create request for %s", user.getSecret());
         return userService.addUser(user);
     }
 
+    @GetMapping()
+    Page<UserDAO> getUsers(Pageable pageable) {
+        return userService.findAllUsers(pageable);
+    }
     @GetMapping("/{userId}")
-    UserDAO getUserById(@PathVariable String userId) {
+    UserDAO getUserById(@PathVariable String userId) throws ErrorDetails {
         return userService.getUserById(userId);
     }
 
@@ -32,7 +43,7 @@ public class UserControllerV1 {
     }
 
     @PatchMapping("/{userId}")
-    void updateUser(@PathVariable("userId") String userId, @RequestBody UpdateUserDTO user) {
+    void updateUser(@PathVariable("userId") String userId, @RequestBody UpdateUserDTO user) throws ErrorDetails {
         userService.updateUser(userId, user);
     }
 }
