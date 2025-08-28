@@ -9,6 +9,8 @@ import com.vikasa.shh_be.mapper.UserToUserDTOMapper;
 import com.vikasa.shh_be.model.User;
 import com.vikasa.shh_be.repository.v1.UserRepositoryV1;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +30,9 @@ public class UserServiceV1 {
     @Autowired
     UserToUserDTOMapper userToUserDTOMapper;
 
-    public List<User> findAllUsers() {
-        return userRepo.findAll();
+    public Page<UserDAO> findAllUsers(Pageable pageable) {
+        Page<User> page = userRepo.findAll(pageable);
+        return page.map(userToUserDTOMapper);
     }
 
     public UserDAO getUserById(String id) throws ErrorDetails {

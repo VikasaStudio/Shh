@@ -9,6 +9,8 @@ import com.vikasa.shh_be.service.v1.UserServiceV1;
 import jakarta.validation.Valid;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,10 @@ public class UserControllerV1 {
         return userService.addUser(user);
     }
 
+    @GetMapping()
+    Page<UserDAO> getUsers(Pageable pageable) {
+        return userService.findAllUsers(pageable);
+    }
     @GetMapping("/{userId}")
     UserDAO getUserById(@PathVariable String userId) throws ErrorDetails {
         return userService.getUserById(userId);
